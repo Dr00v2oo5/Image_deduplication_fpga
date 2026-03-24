@@ -23,25 +23,8 @@ The system converts grayscale image blocks into a compact 64-bit signature and c
 ---
 
 ## System Architecture
+<img width="1120" height="652" alt="arch" src="https://github.com/user-attachments/assets/6b754cf8-17bd-4f99-9a77-dca7e2a44f15" />
 
-Pixel Input (8×8 block)
-↓
-Average Computation
-↓
-Feature Extraction
-├── aHash
-├── dHash
-└── Edge Detection
-↓
-64-bit Signature Generation
-↓
-Signature Comparison (XOR)
-↓
-Hamming Distance
-↓
-Threshold Decision
-↓
-Duplicate Output
 
 ---
 
