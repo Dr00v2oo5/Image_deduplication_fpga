@@ -80,6 +80,16 @@ Duplicate Output
 
 Example output:
 
+Generated Signature = FFFF000000000000
+
+--- CASE 1: SAME IMAGE ---
+Duplicate = 1
+
+--- CASE 2: SLIGHT CHANGE ---
+Duplicate = 1
+
+--- CASE 3: DIFFERENT IMAGE ---
+Duplicate = 0
 
 
 
