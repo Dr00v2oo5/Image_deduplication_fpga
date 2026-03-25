@@ -23,8 +23,8 @@ The system converts grayscale image blocks into a compact 64-bit signature and c
 ---
 
 ## System Architecture
-<img width="1120" height="652" alt="arch" src="https://github.com/user-attachments/assets/6b754cf8-17bd-4f99-9a77-dca7e2a44f15" />
 
+<img width="1142" height="725" alt="arch" src="https://github.com/user-attachments/assets/3031f1f5-b6ea-412c-8608-9a8f3b5dd72c" />
 
 ---
 
