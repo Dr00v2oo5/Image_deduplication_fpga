@@ -19,10 +19,20 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 module tb_loader;
+
+`ifdef VERILATOR
+    initial begin
+	$dumpfile("wave.vcd");
+	$dumpvars(0, tb_loader);
+    end
+
+`endif
+
  // Clock
     reg clk = 0;
-    always #5 clk = ~clk;
+    always #5 clk <= ~clk;
 
     // Inputs
     reg rst;
@@ -36,6 +46,9 @@ module tb_loader;
     wire [63:0] signature;
     wire duplicate;
     wire done;
+
+    //image mem
+    reg [7:0] image_mem [0:63];  // for 8x8 image (64 pixels)
 
     // DUT (Top Module)
     image_dedup_top uut (
@@ -53,6 +66,10 @@ module tb_loader;
     integer i;
 
     initial begin
+    $readmemh("pika.hex", image_mem);
+    end
+
+    initial begin
         // ---------------- RESET ----------------
         rst = 1;
         valid = 0;
@@ -62,15 +79,14 @@ module tb_loader;
 
         #10 rst = 0;
 
-        // ---------------- FEED IMAGE ----------------
-        for (i = 0; i < 64; i = i + 1) begin
-            pixel = (i % 2 == 0) ? 0 : 255;  // simple increasing pattern
-            valid = 1;
-            #10;
-        end
+    // ---------------- FEED IMAGE ----------------
+    for (i = 0; i < 64; i = i + 1) begin
+        pixel = image_mem[i];   // <-- real image data
+        valid = 1;
+        #10;
+    end
 
-        valid = 0;
-
+    valid = 0;
         // ---------------- WAIT FOR SIGNATURE ----------------
         wait(done);
         #10;
@@ -87,11 +103,12 @@ module tb_loader;
         $display("Duplicate = %b", duplicate);
 
         // ---------------- TEST CASE 2: SLIGHT CHANGE ----------------
-        ref_sig = signature ^ 64'h1;   // flip 1 bit
+        ref_sig =  64'h0000000044000060;   // flip 1 bit
+        threshold = 0;
         #10;
 
         $display("\n--- CASE 2: SLIGHT CHANGE ---");
-        $display("Distance should be 1");
+        $display("--- COPY OF THE PIKACHU WITHOUT EARS ---");
         $display("Duplicate = %b", duplicate);
 
         // ---------------- TEST CASE 3: DIFFERENT IMAGE ----------------

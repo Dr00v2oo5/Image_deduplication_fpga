@@ -19,6 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+/* verilator lint_off UNUSEDSIGNAL */
 module image_dedup_top (
     input clk,
     input rst,
@@ -39,6 +40,7 @@ module image_dedup_top (
     wire [7:0] avg;
 
     wire [6:0] distance;
+/* verilator lint_on UNUSEDSIGNAL */
 
     // ---------------- SIGNATURE GENERATOR ----------------
     pixel_loader u1 (
@@ -64,3 +66,4 @@ module image_dedup_top (
     );
 
 endmodule
+

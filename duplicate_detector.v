@@ -35,7 +35,7 @@ module duplicate_detector (
         distance = 0;
 
         for (i = 0; i < 64; i = i + 1) begin
-            distance = distance + diff[i];
+            distance = distance + (diff[i] ? 7'd1 : 7'd0);
         end
 
         if (distance <= threshold)
@@ -45,3 +45,4 @@ module duplicate_detector (
     end
 
 endmodule
+

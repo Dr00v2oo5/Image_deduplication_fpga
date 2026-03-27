@@ -35,9 +35,7 @@ module pixel_loader (
 
     reg [7:0] pixels [0:63];
     reg [15:0] sum;
-    reg [7:0] edge1;
-    reg [6:0] count;
-    reg [23:0] dhash;
+    reg [5:0] count;
     reg [1:0] state;
     integer i;
 
@@ -59,11 +57,13 @@ module pixel_loader (
                 LOAD: begin
                     if (valid) begin
                         pixels[count] <= pixel_in;
-                        sum <= sum + pixel_in;
+                        sum <= sum + {8'b0, pixel_in};
                         count <= count + 1;
 
                         if (count == 63) begin
-                            avg <= (sum + pixel_in) >> 6;
+				/* verilator lint_off WIDTHTRUNC */
+                            avg <= (sum + {8'b0, pixel_in}) >> 6;
+				/* verilator lint_on WIDTHTRUNC */
                             state <= CALC;
                         end
                     end
@@ -114,3 +114,4 @@ module pixel_loader (
     end
 
 endmodule
+
